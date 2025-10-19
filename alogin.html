@@ -10,6 +10,12 @@
     <div class="container">
         <header class="header">
             <img src="logo.png" alt="شعار الشبكة" class="logo">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider-toggle round"></div>
+                </label>
+            </div>
         </header>
         <main class="main-content">
             <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
@@ -23,7 +29,12 @@
                 <!-- In voucher systems, password is often the same as the username -->
                 <input id="password" name="password" type="hidden">
 
-                <button type="submit" class="btn-login">دخول</button>
+                <div class="terms-checkbox-group">
+                    <label for="terms-voucher">أوافق على <a href="#" id="open-terms-voucher">شروط الخدمة</a></label>
+                    <input type="checkbox" id="terms-voucher">
+                </div>
+
+                <button type="submit" class="btn-login" id="login-button-voucher" disabled>دخول</button>
             </form>
 
             <div style="text-align: center; margin-top: 15px;">
@@ -81,5 +92,25 @@
     </script>
     <script src="md5.js"></script>
     <script src="script.js"></script>
+
+    <!-- Terms Modal -->
+    <div id="terms-modal-voucher" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal-voucher" class="modal-close">&times;</button>
+            <h2>شروط وأحكام الاستخدام</h2>
+            <p>
+                1. مقدمة: مرحباً بك في شبكتنا. باستخدامك لهذه الخدمة، فإنك توافق على الالتزام بالشروط والأحكام التالية.
+            </p>
+            <p>
+                2. الاستخدام المسؤول: يجب استخدام الشبكة بطريقة قانونية ومسؤولة. يمنع استخدام الشبكة في أي أنشطة غير قانونية، بما في ذلك تحميل أو توزيع محتوى محمي بحقوق الطبع والنشر.
+            </p>
+            <p>
+                3. الأمان: أنت مسؤول عن أمان جهازك وحماية معلوماتك الشخصية. الشبكة لا تتحمل مسؤولية أي ضرر قد يلحق بجهازك أو بياناتك.
+            </p>
+            <p>
+                4. تحديد المسؤولية: الخدمة مقدمة "كما هي". لا نضمن أن الخدمة ستكون دون انقطاع أو خالية من الأخطاء.
+            </p>
+        </div>
+    </div>
 </body>
 </html>
