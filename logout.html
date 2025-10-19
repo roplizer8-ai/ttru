@@ -3,40 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تم تسجيل الخروج</title>
+    <title data-lang="ar">تم تسجيل الخروج</title>
+    <title data-lang="en" style="display:none;">Logged Out</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .logout-container {
-            text-align: center;
-            padding: 40px;
-        }
-        .logout-container h2 {
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-    </style>
 </head>
 <body>
-    <div class="container" style="max-width: 500px;">
-        <header class="header">
-            <img src="logo.png" alt="شعار الشبكة" class="logo">
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider-toggle round"></div>
-                </label>
+    <div class="login-wrapper" style="max-width: 550px; min-height: auto;">
+        <div class="login-form-container">
+             <header class="header" style="padding: 0; border: none; justify-content: flex-end;">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider-toggle round"></div>
+                    </label>
+                </div>
+            </header>
+
+            <div style="text-align: center; padding: 20px;">
+                <img src="logo.png" alt="شعار الشبكة" class="logo" style="max-width: 150px; margin-bottom: 20px;">
+                <h2 data-lang="ar">تم تسجيل الخروج بنجاح!</h2>
+                <h2 data-lang="en" style="display:none;">Logged Out Successfully!</h2>
+                <p data-lang="ar">شكراً لاستخدامك شبكتنا. نأمل أن نراك قريباً.</p>
+                <p data-lang="en" style="display:none;">Thank you for using our network. We hope to see you again soon.</p>
+                <a href="$(link-login)" class="btn-login" style="margin-top: 20px; display: inline-block; text-decoration: none;" data-lang="ar">تسجيل الدخول مرة أخرى</a>
+                <a href="$(link-login)" class="btn-login" style="margin-top: 20px; display: inline-block; text-decoration: none;" data-lang="en" style="display:none;">Login Again</a>
             </div>
-        </header>
-        <main class="main-content">
-            <div class="logout-container">
-                <h2>تم تسجيل الخروج بنجاح!</h2>
-                <p>شكراً لاستخدامك شبكتنا. نأمل أن نراك قريباً.</p>
-                <a href="$(link-login)" class="btn-login" style="margin-top: 20px; display: inline-block; text-decoration: none;">تسجيل الدخول مرة أخرى</a>
-            </div>
-        </main>
-        <footer class="footer">
-            <p>جميع الحقوق محفوظة &copy; 2025</p>
-        </footer>
+
+            <footer style="text-align: center; margin-top: auto; padding-top: 20px;">
+                <button id="lang-toggle">English</button>
+            </footer>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

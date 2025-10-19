@@ -7,38 +7,48 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
+
+
+    <div class="login-wrapper">
+        <div class="login-branding-container">
             <img src="logo.png" alt="شعار الشبكة" class="logo">
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider-toggle round"></div>
-                </label>
-            </div>
-        </header>
-        <main class="main-content">
+        </div>
+        <div class="login-form-container">
+             <header class="header" style="padding: 0; border: none; justify-content: flex-end;">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider-toggle round"></div>
+                    </label>
+                </div>
+            </header>
+
+            <h2 data-lang="ar">تسجيل الدخول بالكارت</h2>
+            <h2 data-lang="en" style="display:none;">Voucher Login</h2>
+
             <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
                 <input type="hidden" name="dst" value="$(link-orig)">
                 <input type="hidden" name="popup" value="true">
 
                 <div class="form-group">
-                    <label for="username">كود الكارت</label>
-                    <input id="username" name="username" type="text" value="$(username)" required>
+                    <span class="icon fas fa-ticket-alt"></span>
+                    <input id="username" name="username" type="text" value="$(username)" required placeholder="كود الكارت">
                 </div>
-                <!-- In voucher systems, password is often the same as the username -->
                 <input id="password" name="password" type="hidden">
 
                 <div class="terms-checkbox-group">
-                    <label for="terms-voucher">أوافق على <a href="#" id="open-terms-voucher">شروط الخدمة</a></label>
+                    <label for="terms-voucher" data-lang="ar">أوافق على <a href="#" id="open-terms-voucher">شروط الخدمة</a></label>
+                    <label for="terms-voucher" data-lang="en" style="display:none;">I agree to the <a href="#" id="open-terms-voucher-en">Terms of Service</a></label>
                     <input type="checkbox" id="terms-voucher">
                 </div>
 
-                <button type="submit" class="btn-login" id="login-button-voucher" disabled>دخول</button>
+                <button type="submit" class="btn-login" id="login-button-voucher" disabled data-lang="ar">دخول</button>
+                <button type="submit" class="btn-login" id="login-button-voucher-en" disabled data-lang="en" style="display:none;">Login</button>
             </form>
 
             <div style="text-align: center; margin-top: 15px;">
-                <a href="login.html">تسجيل الدخول باسم مستخدم</a>
+                <a href="login.html" data-lang="ar">تسجيل الدخول باسم مستخدم</a>
+                <a href="login.html" data-lang="en" style="display:none;">Login with Username</a>
             </div>
 
             $(if error)
@@ -47,70 +57,44 @@
             </div>
             $(endif)
 
-            <hr style="margin-top: 25px;">
-
-            <table class="packages-table">
-                <thead>
-                    <tr>
-                        <th colspan="2">باقات الإنترنت</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>باقة 1 جيجا</td>
-                        <td>5 جنيه</td>
-                    </tr>
-                    <tr>
-                        <td>باقة 5 جيجا</td>
-                        <td>20 جنيه</td>
-                    </tr>
-                    <tr>
-                        <td>باقة 10 جيجا</td>
-                        <td>35 جنيه</td>
-                    </tr>
-                </tbody>
-            </table>
-        </main>
-        <aside class="sidebar">
-            <div class="ad-space">
-                <div class="slider">
-                    <div class="slide"><img src="img/ad1.svg" alt="Ad 1"></div>
-                    <div class="slide"><img src="img/ad2.svg" alt="Ad 2"></div>
-                    <!-- Add more slides as needed -->
-                </div>
-            </div>
-        </aside>
-        <footer class="footer">
-            <p>جميع الحقوق محفوظة &copy; 2025</p>
-        </footer>
-    </div>
-    <script>
-        // Function to automatically copy username to password field for voucher login
-        document.login.username.onkeyup = function() {
-            document.login.password.value = document.login.username.value;
-        };
-    </script>
-    <script src="md5.js"></script>
-    <script src="script.js"></script>
-
-    <!-- Terms Modal -->
-    <div id="terms-modal-voucher" class="modal-overlay">
-        <div class="modal-content">
-            <button id="close-modal-voucher" class="modal-close">&times;</button>
-            <h2>شروط وأحكام الاستخدام</h2>
-            <p>
-                1. مقدمة: مرحباً بك في شبكتنا. باستخدامك لهذه الخدمة، فإنك توافق على الالتزام بالشروط والأحكام التالية.
-            </p>
-            <p>
-                2. الاستخدام المسؤول: يجب استخدام الشبكة بطريقة قانونية ومسؤولة. يمنع استخدام الشبكة في أي أنشطة غير قانونية، بما في ذلك تحميل أو توزيع محتوى محمي بحقوق الطبع والنشر.
-            </p>
-            <p>
-                3. الأمان: أنت مسؤول عن أمان جهازك وحماية معلوماتك الشخصية. الشبكة لا تتحمل مسؤولية أي ضرر قد يلحق بجهازك أو بياناتك.
-            </p>
-            <p>
-                4. تحديد المسؤولية: الخدمة مقدمة "كما هي". لا نضمن أن الخدمة ستكون دون انقطاع أو خالية من الأخطاء.
-            </p>
+            <footer style="text-align: center; margin-top: auto; padding-top: 20px;">
+                 <a href="#" id="contact-us" data-lang="ar">اتصل بنا</a>
+                <a href="#" id="contact-us-en" data-lang="en" style="display:none;">Contact Us</a>
+                 |
+                <button id="lang-toggle">English</button>
+            </footer>
         </div>
     </div>
+
+    <!-- Terms Modal -->
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-terms-modal" class="modal-close">&times;</button>
+            <h2 data-lang="ar">شروط الخدمة</h2>
+            <h2 data-lang="en" style="display:none;">Terms of Service</h2>
+            <div class="modal-body">
+                <p data-lang="ar">1. الاستخدام المسؤول للشبكة. 2. يمنع استخدام الشبكة في أنشطة غير قانونية. 3. الشركة غير مسؤولة عن أي فقدان للبيانات.</p>
+                <p data-lang="en" style="display:none;">1. Responsible use of the network. 2. Use of the network for illegal activities is prohibited. 3. The company is not responsible for any data loss.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us Modal -->
+    <div id="contact-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-contact-modal" class="modal-close">&times;</button>
+            <h2 data-lang="ar">اتصل بنا</h2>
+            <h2 data-lang="en" style="display:none;">Contact Us</h2>
+            <p data-lang="ar">للحصول على الدعم الفني، يرجى التواصل عبر:</p>
+            <p data-lang="en" style="display:none;">For technical support, please contact us via:</p>
+            <ul>
+                <li><strong>Email:</strong> support@yournetwork.com</li>
+                <li><strong>Phone:</strong> +123 456 7890</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="md5.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

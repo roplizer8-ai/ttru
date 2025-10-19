@@ -1,83 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-T">
-    <meta http-equiv="refresh" content="60">
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="300">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة الاتصال</title>
+    <title data-lang="ar">حالة الاتصال</title>
+    <title data-lang="en" style="display:none;">Connection Status</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .status-table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        .status-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            text-align: right;
-        }
-        .status-table td:first-child {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        .btn-refresh {
-            background-color: var(--secondary-color);
-        }
-        .btn-refresh:hover {
-            background-color: #5a6268;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container" style="max-width: 500px;">
-        <header class="header">
+
+
+    <div class="login-wrapper">
+        <div class="login-branding-container">
             <img src="logo.png" alt="شعار الشبكة" class="logo">
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" id="checkbox" />
-                    <div class="slider-toggle round"></div>
-                </label>
+        </div>
+        <div class="login-form-container">
+            <header class="header" style="padding: 0; border: none; justify-content: space-between;">
+                <h2 id="greeting"></h2>
+                 <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider-toggle round"></div>
+                    </label>
+                </div>
+            </header>
+
+            <div class="status-info">
+                <p><strong data-lang="ar">اسم المستخدم:</strong><strong data-lang="en" style="display:none;">Username:</strong> $(username)</p>
+                <p><strong data-lang="ar">عنوان IP:</strong><strong data-lang="en" style="display:none;">IP Address:</strong> $(ip)</p>
             </div>
-        </header>
-        <main class="main-content">
-            <h2 style="text-align: center; margin-bottom: 20px;">مرحباً بك, $(username)!</h2>
 
-            <table class="status-table">
-                <tr>
-                    <td>عنوان IP</td>
-                    <td>$(ip)</td>
-                </tr>
-                <tr>
-                    <td>البيانات المرفوعة</td>
-                    <td>$(bytes-out-nice)</td>
-                </tr>
-                <tr>
-                    <td>البيانات المحملة</td>
-                    <td>$(bytes-in-nice)</td>
-                </tr>
-                <tr>
-                    <td>الوقت المنقضي</td>
-                    <td>$(uptime)</td>
-                </tr>
-                $(if session-time-left)
-                <tr>
-                    <td>الوقت المتبقي</td>
-                    <td>$(session-time-left)</td>
-                </tr>
-                $(endif)
-            </table>
+            <div class="charts-container" style="display:flex; justify-content: space-around; margin-top: 20px;">
+                <div class="chart-wrapper" style="width: 120px; height: 120px;">
+                    <canvas id="uptime-chart"></canvas>
+                    <div class="chart-label" data-lang="ar">الوقت المتبقي</div>
+                    <div class="chart-label" data-lang="en" style="display:none;">Time Left</div>
+                </div>
+                <div class="chart-wrapper" style="width: 120px; height: 120px;">
+                    <canvas id="data-chart"></canvas>
+                    <div class="chart-label" data-lang="ar">البيانات المتبقية</div>
+                    <div class="chart-label" data-lang="en" style="display:none;">Data Left</div>
+                </div>
+            </div>
 
-            <form name="logout" action="$(link-logout)" method="post">
-                <button type="submit" class="btn-login" style="margin-top: 20px;">تسجيل الخروج</button>
+            <form name="logout" action="$(link-logout)" method="post" style="margin-top: 30px;">
+                <button type="submit" class="btn-login" data-lang="ar">تسجيل الخروج</button>
+                <button type="submit" class="btn-login" data-lang="en" style="display:none;">Logout</button>
             </form>
-            <form>
-               <button type="submit" class="btn-login btn-refresh" style="margin-top: 10px;">تحديث</button>
-            </form>
-        </main>
-        <footer class="footer">
-            <p>للاطلاع على حالة الاتصال، قم بزيارة <a href="$(link-status)" style="color: white;">$(link-status)</a></p>
-        </footer>
+
+            <footer style="text-align: center; margin-top: auto; padding-top: 20px;">
+                <a href="$(link-status)" data-lang="ar">تحديث</a>
+                <a href="$(link-status)" data-lang="en" style="display:none;">Refresh</a>
+                 |
+                <button id="lang-toggle">English</button>
+            </footer>
+        </div>
     </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Greeting Script
+        const greetingEl = document.getElementById('greeting');
+        const hours = new Date().getHours();
+        const lang = document.documentElement.lang || 'ar';
+
+        let greetingText;
+        if (lang === 'ar') {
+            if (hours < 12) greetingText = 'صباح الخير';
+            else if (hours < 18) greetingText = 'مساء الخير';
+            else greetingText = 'طاب مساؤك';
+            greetingEl.textContent = `${greetingText}, $(username)!`;
+        } else {
+            if (hours < 12) greetingText = 'Good morning';
+            else if (hours < 18) greetingText = 'Good afternoon';
+            else greetingText = 'Good evening';
+            greetingEl.textContent = `${greetingText}, $(username)!`;
+        }
+
+        // --- DATA VISUALIZATION ---
+        // NOTE: The chart data below is STATIC for demonstration purposes.
+        // In a real MikroTik environment, you would replace the 'data' arrays
+        // with dynamic values parsed from MikroTik's status page variables.
+        // For example: data: [parseInt('$(session-time-left)'), parseInt('$(session-time-total)') - parseInt('$(session-time-left)')]
+
+        // Uptime chart
+        const uptimeData = [75, 25]; // Static example: 75% used
+        new Chart('uptime-chart', {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: uptimeData,
+                    backgroundColor: ['#3F9BFF', '#e0e0e0'],
+                    borderWidth: 0
+                }]
+            },
+            options: { cutout: '70%', plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+        });
+
+        // Data chart
+        const dataUsageData = [50, 50]; // Static example: 50% used
+        new Chart('data-chart', {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: dataUsageData,
+                    backgroundColor: ['#28A745', '#e0e0e0'],
+                    borderWidth: 0
+                }]
+            },
+            options: { cutout: '70%', plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+        });
+    </script>
 </body>
 </html>
